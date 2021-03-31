@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<items>
+	<item>
+		<name id="ks1">홍길동</name>
+		<tel>111-1111</tel>
+		<exam kor="90" eng="80"/>	<!-- 속성값으로 값을 줄수있다. -->
+	</item>
+	<item>
+		<name id="ks2">신길동</name>
+		<tel>111-2222</tel>
+		<exam kor="100" eng="50"/>
+	</item>
+</items>
