@@ -1,4 +1,4 @@
-# GetOldTweets3
+# GetOldTweets3  ===> 2021/04/04 막힌듯함.. 404 오류    
 
 # 1. GetOldTweet3 패키지 설치 및 사용 준비
 

@@ -20,7 +20,7 @@ try:
     browser.implicitly_wait(time_to_wait=5)
     # Implicit Waits(암묵적 대기) 찾으려는 element가 로드될 때까지 지정한 시간만큼 대기할 수 있도록 설정
     # Explicit Waits(명시적 대기) 함수를 사용하여 무조건 몇 초간 대기하는 방법이다 편리하긴 하지만, 형편없는 효율 == Ex)time.sleep(3)
-    # browser.maximize_window()
+    # browser.maximize_window()    # 브라우저 최대크기로 실행
 
     url = "https://twitter.com/search?q={0}%20until%3A{2}%20since%3A{1}&src=typed_query"
     # 검색어, 시작, 끝

@@ -1,3 +1,6 @@
+# Selenium 연습 - 스크롤 자동으로 밑으로 내려주는 작업 (스크롤 내린 후 로딩되어 내용이 더생기면 생기지 않을때까지 while문)
+
+
 from selenium import webdriver
 import urllib.request as req
 from bs4 import BeautifulSoup

@@ -1,3 +1,6 @@
+# 트위터
+# 특정 사용자(하나의 사용자)에서 특정 단어가 들어간 게시글만 모두 뽑아옴...
+
 # 패키지 읽기 
 import twitter
 import numpy as np
