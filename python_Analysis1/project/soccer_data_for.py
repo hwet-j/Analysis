@@ -22,6 +22,7 @@ for i in a:
             
             # 경기 시작시간
             time = browser.find_elements_by_class_name("time")
+            print(time)
             # 경기위치
             place = browser.find_elements_by_class_name("place")
             # 팀명
