@@ -62,17 +62,17 @@ try:
         print(text)
         df = pd.DataFrame(text)
         
-        file_name = "tweet_{}.txt".format(end)
-        
+        file_name = "Twitter_{}.txt".format(end)
+        # 하루 데이터 저장
         df.to_csv(file_name, mode='w', index = False, header = False)
-        #df.to_excel(('tweet'+str(i).zfill(3)+'.xlsx'), index=False)
         
         time.sleep(2)   # 저장이 완성되고 넘어갈수있는 방법을찾아보기
         browser.quit()  # 브라우저 종료 - 완성되면
         print('성공')
     
+    # 전체를 저장(지정해준 범위만큼)
     df2 = pd.DataFrame(text_all) 
-    df2.to_csv("Tweet_search_data.txt", mode='w', index = False, header = False)
+    df2.to_csv("Twitter_all_data.txt", mode='w', index = False, header = False)
     print('끝')
 except Exception:
     print('에러')    
