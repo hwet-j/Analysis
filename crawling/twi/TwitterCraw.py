@@ -6,11 +6,29 @@ import numpy as np
 import time
 from datetime import datetime, timedelta
 
+# 현재 30일치. 뽑아놓음 -> 이걸로 테스트 해서 분석해보고 완성되면 100일치...
+
+# 데이터 정제용
+import re
+def clean_str(text):    
+    print('--------------------------------------------------')
+    text = re.sub(r"[^가-힣A-Za-z0-9(),!?\'\`]", " ", text)
+    text = re.sub(r"\'ll", " \'ll", text)
+    text = re.sub(r",", " , ", text)
+    text = re.sub(r"!", " ! ", text)
+    text = re.sub(r"\(", "", text)
+    text = re.sub(r"\)", "", text)
+    text = re.sub(r"\?", " \? ", text)
+    text = re.sub(r"\s{2,}", " ", text)
+    text = re.sub(r"\'{2,}", "\'", text)
+    text = re.sub(r"\'", "", text)
+    return text
+
 
 try:
     end = datetime.today().strftime("%Y-%m-%d")
     text_all = []
-    for i in range(2):  # range 날짜 범위 -> 오늘 부터 시작되게 만들어놓음
+    for i in range(30):  # range 날짜 범위 -> 오늘 부터 시작되게 만들어놓음
         
         headers = {
             "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36",
@@ -27,6 +45,7 @@ try:
         
         # 검색어 변경은 여기서 -> 코드로 입력 말고 input 사용해도됨. 현재로써 필요성을 느끼지 못함
         search = url.format("백신", start ,end)
+        # search = url.format("백신", '2021-03-18' ,'2021-03-19')
         
         browser.get(search)
         
@@ -41,8 +60,9 @@ try:
             
             for n in element:
                 # name1 = n.text.split("\n")    # 올바른 데이터가 나오는지 확인
-                text.append(n.text.split("\n")) # 변수 저장
-                text_all.append(n.text.split("\n"))
+                text.append(clean_str(n.text))  # 변수 저장
+                # text.append(n.text.split("\n")) # 변수 저장
+                # text_all.append(n.text.split("\n"))
             # print(text) # 확인
             
             # 스크롤을 화면 가장 아래로 내린다
@@ -66,15 +86,19 @@ try:
         # 하루 데이터 저장
         df.to_csv(file_name, mode='w', index = False, header = False)
         
+        df.to_csv("./data/Twitter_all_data.txt", mode='a', index = False, header = False)
+        
         time.sleep(2)   # 저장이 완성되고 넘어갈수있는 방법을찾아보기
         browser.quit()  # 브라우저 종료 - 완성되면
+        print(i)
         print('성공')
     
     # 전체를 저장(지정해준 범위만큼)
-    df2 = pd.DataFrame(text_all) 
-    df2.to_csv("./data/Twitter_all_data.txt", mode='w', index = False, header = False)
+    #df2 = pd.DataFrame(text_all) 
+    #df2.to_csv("./data/Twitter_all_data.txt", mode='w', index = False, header = False)
     print('끝')
-except Exception:
+except Exception as e:
+    print(e)
     print('에러')    
 
 
