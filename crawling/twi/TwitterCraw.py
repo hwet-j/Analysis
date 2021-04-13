@@ -28,7 +28,7 @@ def clean_str(text):
 try:
     end = datetime.today().strftime("%Y-%m-%d")
     text_all = []
-    for i in range(30):  # range 날짜 범위 -> 오늘 부터 시작되게 만들어놓음
+    for i in range(100):  # range 날짜 범위 -> 오늘 부터 시작되게 만들어놓음
         
         headers = {
             "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36",
@@ -43,9 +43,10 @@ try:
         end = (datetime.today() - timedelta(i)).strftime("%Y-%m-%d")
         url = "https://twitter.com/search?q={0}%20until%3A{2}%20since%3A{1}&src=typed_query"
         
+        # 아스트라제네카(AZ), 화이자
+        # (아스트라제네카 OR AZ백신) 으로 검색어 하면 될듯
         # 검색어 변경은 여기서 -> 코드로 입력 말고 input 사용해도됨. 현재로써 필요성을 느끼지 못함
-        search = url.format("백신", start ,end)
-        # search = url.format("백신", '2021-03-18' ,'2021-03-19')
+        search = url.format("화이자", start ,end)
         
         browser.get(search)
         
@@ -82,11 +83,11 @@ try:
         print(text)
         df = pd.DataFrame(text)
         
-        file_name = "./data/Twitter_{}.txt".format(end)
+        #file_name = "./data/Twitter_{}.txt".format(end)
         # 하루 데이터 저장
-        df.to_csv(file_name, mode='w', index = False, header = False)
+        #df.to_csv(file_name, mode='w', index = False, header = False)
         
-        df.to_csv("./data/Twitter_all_data.txt", mode='a', index = False, header = False)
+        df.to_csv("./data/Twitter_all_data(AZ).txt", mode='a', index = False, header = False)
         
         time.sleep(2)   # 저장이 완성되고 넘어갈수있는 방법을찾아보기
         browser.quit()  # 브라우저 종료 - 완성되면

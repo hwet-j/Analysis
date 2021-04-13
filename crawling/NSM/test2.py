@@ -1,5 +1,6 @@
 # 긍정 1 부정 -1 그외 0
 
+# 설정해 놓은 긍정 부정 단어를 가져옴
 with open("./negative_words_twit.txt", encoding='utf-8') as neg: 
     negative = neg.readlines()
 
@@ -16,21 +17,21 @@ from tqdm import tqdm
 import re 
 import pandas as pd
 
-my_title_df = pd.read_csv("Twitter_all_data.txt", sep="\n", header=None)
+# 트위터 데이터 가져옴 한 줄마다 한 게시글 
+datas = pd.read_csv("Twitter_all_data.txt", sep="\n", header=None)
 
-# my_title_df = pd.DataFrame(my_title_df, columns="title")
+# print(datas.head(4))
+# print(datas.columns)
+# 칼럼명 지정
+datas = datas.rename(columns={0:"title"})
+# 확인
+print(datas.columns)
 
-print(my_title_df.head(4))
-print(my_title_df.columns)
-
-my_title_df = my_title_df.rename(columns={0:"title"})
-
-print(my_title_df.columns)
-
+# 0, -1, 1의값을 넣어줄 라벨 준비
 labels = [] 
 
-
-title_data = list(my_title_df['title']) 
+# 데이터를 리스트화
+title_data = list(datas['title']) 
 
 for title in tqdm(title_data): 
     clean_title = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…\"\“》]', '', title) 
@@ -51,10 +52,10 @@ for title in tqdm(title_data):
         
     labels.append(label) 
     
-my_title_df['label'] = labels
+datas['label'] = labels
    
-print(my_title_df)
+print(datas)
 
-print(my_title_df['label'].value_counts())
+print(datas['label'].value_counts())
 
-my_title_df.to_excel(excel_writer="result.xlsx")
+datas.to_excel(excel_writer="result.xlsx")
