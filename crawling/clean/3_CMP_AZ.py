@@ -42,6 +42,7 @@ print(train_data.isnull().sum())   # Null값 존재확인
 train_data = train_data.dropna(how = 'any') # Null값 제거
 print(len(train_data)) 
 
+
 # test 동일작업
 test_data.drop_duplicates(subset = ['title'], inplace=True) # document 열에서 중복인 내용이 있다면 중복 제거
 test_data['title'] = test_data['title'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","") # 정규 표현식 수행

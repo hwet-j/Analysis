@@ -1,3 +1,5 @@
+# 잘못됨 ... 수정 필요
+
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.datasets import imdb
@@ -10,7 +12,7 @@ from sklearn.model_selection import train_test_split
 
 
 
-with open("./data/freq_bf(PZ).txt", encoding='utf-8') as text: 
+with open("./data/freq_AZ.txt", encoding='utf-8') as text: 
     data = text.readlines() 
 
 list = []
@@ -47,6 +49,6 @@ def write_txt(list, fname, sep) :
     file.close()
     print('[ 파일 저장 완료 ]')
 
-write_txt(wordlist, "./data/freq.txt", "\n")
+write_txt(wordlist, "./data/freq(AZ).txt", "\n")
 
 

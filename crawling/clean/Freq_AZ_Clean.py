@@ -1,8 +1,10 @@
+# 빈도수를 확인하기위해 데이터를 정리
+
 import pandas as pd
 import numpy as np
 from konlpy.tag import Okt
 
-data = pd.read_excel("./data/result(PZ).xlsx")
+data = pd.read_excel("./data/result(AZ).xlsx")
 
 data = data.set_index('Unnamed: 0')
 print(data)
@@ -50,7 +52,7 @@ sorted_by_value = sorted(counter_re.items(), key=lambda x: x[1], reverse=True)
 sorted_dict = collections.OrderedDict(sorted_by_value)
 
 # 저장
-with open("./data/freq_test.txt", 'w', encoding="UTF-8") as f:
+with open("./data/freq_AZ.txt", 'w', encoding="UTF-8") as f:
     for key,value in sorted_dict.items():
         f.write(key+':'+str(value)+'\n')
 

@@ -1,3 +1,5 @@
+# 데이터 뽑아오기 (아주 조금 정제함)
+
 from selenium import webdriver
 import urllib.request as req
 from bs4 import BeautifulSoup
