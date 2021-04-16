@@ -149,8 +149,8 @@ tokenizer = Tokenizer(num_words = max_words)
 tokenizer.fit_on_texts(X_train) 
 X_train = tokenizer.texts_to_sequences(X_train) 
 X_test = tokenizer.texts_to_sequences(X_test)
-print(X_train[:3])
-print(X_test[:3])
+# print(X_train[:3])
+# print(X_test[:3])
 
 
 # 다음으로는 y값으로 들어갈 label -1, 0, 1을 컴퓨터가 보고 알수 있도록 one-hot encoding
@@ -177,8 +177,8 @@ for i in range(len(test_data['label'])):
 y_train = np.array(y_train)
 y_test = np.array(y_test)
 
-print(y_train[:3])
-print(y_test[:3])
+# print(y_train[:3])
+# print(y_test[:3])
 
 
 

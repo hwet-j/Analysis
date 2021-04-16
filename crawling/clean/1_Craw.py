@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 
 
 # 데이터 정제용
+
 import re
 def clean_str(text):    
     print('--------------------------------------------------')
@@ -29,7 +30,7 @@ def clean_str(text):
 try:
     end = datetime.today().strftime("%Y-%m-%d")
     text_all = []
-    for i in range(100):  # range 날짜 범위 -> 오늘 부터 시작되게 만들어놓음
+    for i in range(70):  # range 날짜 범위 -> 오늘 부터 시작되게 만들어놓음
         
         headers = {
             "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36",

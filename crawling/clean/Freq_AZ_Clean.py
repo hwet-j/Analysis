@@ -3,6 +3,7 @@
 import pandas as pd
 import numpy as np
 from konlpy.tag import Okt
+from collections import Counter,OrderedDict
 
 data = pd.read_excel("./data/result(AZ).xlsx")
 
@@ -33,15 +34,13 @@ for sentence in data['title']:
     temp = [word for word in temp if not word in stopwords] # 불용어 제거
     datas.append(temp)
     
-print(datas[:3])
+# print(datas[:3])
 df = []
 for i in datas:
     df += i
+print(df[0:30])
 
 
-from konlpy.tag import Okt
-import collections
-from collections import Counter, OrderedDict
 counter = Counter(df)
 # 한글자 제거
 counter_re = Counter({x: counter[x] for x in counter if len(x) > 1})
@@ -49,7 +48,7 @@ counter_re = Counter({x: counter[x] for x in counter if len(x) > 1})
 # value값을 기준으로 정렬
 sorted_by_value = sorted(counter_re.items(), key=lambda x: x[1], reverse=True)
 # list타입으로 바뀌어서 dict로 변환 (저장할때 오류남 - key,value를 사용할수없음)
-sorted_dict = collections.OrderedDict(sorted_by_value)
+sorted_dict = OrderedDict(sorted_by_value)
 
 # 저장
 with open("./data/freq_AZ.txt", 'w', encoding="UTF-8") as f:

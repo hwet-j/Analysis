@@ -11,23 +11,24 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 data = pd.read_excel("./data/result(AZ).xlsx")
 
-print(type(data))
-print(data.columns)
+# print(type(data))
+# print(data.columns)
 data = data.set_index('Unnamed: 0')
-print(data)
+# print(data)
 
 ###################################
 ############ 데이터 정제하기 ############
 ###################################
 train_data, test_data = train_test_split(data, test_size=0.30, random_state=123)
-print(train_data.shape, test_data.shape)    # (2354, 2) (1009, 2)
+# print(train_data.shape, test_data.shape)    # (2354, 2) (1009, 2)
 
 # 중복되는 데이터 제거작업
 # print(train_data['title'].nunique(), train_data['label'].nunique())
 train_data.drop_duplicates(subset = ['title'], inplace=True)
 # print(train_data.shape)
 
-print(train_data.groupby('label').size().reset_index(name = 'count'))
+# 빈도수
+# print(train_data.groupby('label').size().reset_index(name = 'count'))
 
 # 한글빼고 그냥 다 제거
 train_data['title'] = train_data['title'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
@@ -37,10 +38,9 @@ train_data['title'] = train_data['title'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]
 # 데이터 정제 과정에서 영어만 존재하거나 한글이없는 데이터는 공백이므로 Null값이나 다름없는 데이터라 판단 
 train_data['title'] = train_data['title'].str.replace('^ +', "") # white space 데이터를 empty value로 변경(긴 공백이나 특수문자들로만 이루어진데이터를 공백하나로 바꿔줌)
 train_data['title'].replace('', np.nan, inplace=True)   # 공백으로 바꿔준 데이터를 Null값으로 
-print(train_data.isnull().sum())   # Null값 존재확인 
-
-train_data = train_data.dropna(how = 'any') # Null값 제거
-print(len(train_data)) 
+# print(train_data.isnull().sum())   # Null값 존재확인 
+# train_data = train_data.dropna(how = 'any') # Null값 제거
+# print(len(train_data)) 
 
 
 # test 동일작업
@@ -49,7 +49,7 @@ test_data['title'] = test_data['title'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",
 test_data['title'] = test_data['title'].str.replace('^ +', "") # 공백은 empty 값으로 변경
 test_data['title'].replace('', np.nan, inplace=True) # 공백은 Null 값으로 변경
 test_data = test_data.dropna(how='any') # Null 값 제거
-print('전처리 후 테스트용 샘플의 개수 :',len(test_data)) 
+# print('전처리 후 테스트용 샘플의 개수 :',len(test_data)) 
 
 #############################
 ############ 토큰화 ############
@@ -152,6 +152,15 @@ X_train = tokenizer.texts_to_sequences(X_train)
 X_test = tokenizer.texts_to_sequences(X_test)
 print(X_train[:3])
 print(X_test[:3])
+print(train_data['label'][:40])
+#################################################
+#################################################
+# train_use = pd.DataFrame(data=None, index=None, columns=None, dtype=None, copy=False)
+# train_use['x_train'] = X_train
+# train_use['y_train'] = train_data['label']
+# 
+# train_use.to_csv("./data/train_d.csv", mode='w', index = False, header = False)
+
 
 
 # 다음으로는 y값으로 들어갈 label -1, 0, 1을 컴퓨터가 보고 알수 있도록 one-hot encoding
@@ -250,4 +259,11 @@ for i in range(30):
 
 
 
+
+
+# train_data['label'].value_counts().plot(kind='bar')
+# test_data['label'].value_counts().plot(kind='bar')
+# print(train_data.groupby('label').size().reset_index(name = 'count'))
+# print(test_data.groupby('label').size().reset_index(name = 'count'))
+# plt.show()
 
