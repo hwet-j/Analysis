@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="contaoiner">
+		<div class="row">
+			<div class="col-md=8">
+				<canvas id="myChartBar"></canvas>
+			</div>
+		</div>
+	</div>
+<script>
+
+	const data_1 = {
+	  labels: labels_day,
+	  datasets: [
+	    {
+	      label: '누적 확진',
+	      data:[ day_7, day_6, day_5, day_4, day_3, day_2, day_1, day_0 ],
+	      backgroundColor: 'rgb(255, 127, 80, 0.3)',
+	      borderColor: 'Coral'
+	      
+	    },
+	    {
+		   label: '누적 완치',
+		   data:[
+		    	  {{ dataWeek.isolClearCnt }},{{ data_6.isolClearCnt }}, {{ data_5.isolClearCnt }}, {{ data_4.isolClearCnt }}, {{ data_3.isolClearCnt }}, {{ data_2.isolClearCnt }}, {{ dataYesterday.isolClearCnt }}, {{ koreaData.isolClearCnt }}
+		    	  ],
+		    	  backgroundColor: 'rgb(220, 20, 60, 0.3)',
+		    	  borderColor: 'skyblue'
+		}
+	  ]
+	};
+	
+	let myChartOne = document.getElementById('myChartBar').getContext('2d');
+	
+	let lineChart = new Chart(myChartOne,{	
+		type : 'line',	
+		data: data_1,
+		options: {
+		    responsive: true,
+		    plugins: {
+		      legend: {
+		        position: 'top',
+		      },
+		      title: {
+		        display: true,
+		        text: '코로자 감염자 추이'
+		      }
+		    }
+		  }
+	});
+</script>
+	
+</body>
+</html>

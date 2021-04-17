@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.min.js"></script> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div class="contaoiner">
+		<div class="row">
+			<div class="col-md=12">
+				<canvas id="myChartOne"></canvas>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+const data_age = {
+		labels : ['{{data_00.gubun}}','{{data_10.gubun}}','{{data_20.gubun}}','{{data_30.gubun}}','{{data_40.gubun}}','{{data_50.gubun}}','{{data_60.gubun}}','{{data_70.gubun}}','{{data_80.gubun}}'],
+			  datasets: [			    
+			    {
+			      label: '누적 사망자',
+			      data: [
+			    	  {{ dataWeek.deathCnt }}, {{ data_6.deathCnt }}, {{ data_5.deathCnt }}, {{ data_4.deathCnt }}, {{ data_3.deathCnt }}, {{ data_2.deathCnt }}, {{ dataYesterday.deathCnt }}, {{ koreaData.deathCnt }} ],
+			    backgroundColor: 'transparent',
+				borderColor: 'FireBrick'
+			    }
+			  ]
+			};
+let lineChartDef = new Chart(myChartAge,{	
+	type : 'bar',	
+	data: data_age,
+	options: {
+		indexAxis: 'y',
+	    plugins: {
+	      title: {
+	        display: true,
+	        text: '연령별 확진자 추세',
+	      },
+	    },
+	    responsive: true,
+	}
+});
+</script>
+
+</body>
+</html>

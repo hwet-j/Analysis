@@ -1,0 +1,69 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+
+<p class="center_text">마지막 업데이트 : {{v_time}}</p>
+<div class="contaoiner">
+	<table>
+  <tr class="table_head">
+    <td>접종횟수</td>
+    <td>1차접종자</td>
+    <td>2차접종자</td>
+  </tr>
+  <tr class="table_text">
+    <td id="total">0</td>
+    <td >{{ day_sum.firstCnt }}</td>
+    <td >{{ day_sum.secondCnt }}</td>
+  </tr>
+  <tr class="inc_text_vaccin">
+    <td id="todayTotal">0</td>
+    <td>+{{ day0_v.firstCnt }}</td>
+    <td>+{{ day0_v.secondCnt }}</td>
+  </tr>
+</table>
+</div>
+<div class="contaoiner">
+<h2 align="center">아스트라제네카에 대한 부정,중립,긍정 빈도수 및 워드클라우드 시각화</h2>
+<div align="center">
+<img alt="" src="/static/images/Count_Sentiment(AZ백신).png" width="300">
+<img alt="" src="/static/images/wordcloud(AZ백신).png" width="300">
+</div>
+</div>
+<div class="contaoiner">
+<h2 align="center">화이자에 대한 부정,중립,긍정 빈도수 및 워드클라우드 시각화</h2>
+<div align="center">
+<img alt="" src="/static/images/Count_Sentiment(화이자).png" width="300">
+<img alt="" src="/static/images/wordcloud(화이자).png" width="300">
+</div>
+</div>
+<div class="contaoiner">
+<h2 align="center">백신에 대한 부정,중립,긍정 빈도수 및 워드클라우드 시각화</h2>
+<div align="center">
+<img alt="" src="/static/images/Count_Sentiment(백신).png" width="300">
+<img alt="" src="/static/images/wordcloud(백신).png" width="300">
+</div>
+</div>
+<div class="contaoiner">
+<h2 align="center">아스트라제네카에 대한 시간별 부정,중립,긍정 빈도수 변화</h2>
+<div align="center"><img alt="" src="/static/images/빈도수_그래프(AZ).png" width="300"></div>
+<h2 align="center">화이자에 대한 시간별 부정,중립,긍정 빈도수 변화</h2>
+<div align="center"><img alt="" src="/static/images/빈도수_그래프(화이자).png" width="300" align="center"></div>
+<h2 align="center">백신에 대한 시간별 부정,중립,긍정 빈도수 변화</h2>
+<div align="center"><img alt="" src="/static/images/빈도수_그래프(백신).png" width="300" align="center"></div>
+</div>
+<script>
+ var day0_tpcd = 2;
+ var dayS_tpcd = 2;
+ var day0_1 = {{ day0_v.firstCnt }};
+ var day0_2 = {{ day0_v.secondCnt }};
+ var dayS_1 = {{ day_sum.firstCnt }};
+ var dayS_2 = {{ day_sum.secondCnt }};
+ 
+ day0_tpcd = day0_1 + day0_2;
+ dayS_tpcd = dayS_1 + dayS_2;
+ 
+ document.getElementById("total").innerText  = dayS_tpcd;
+ document.getElementById("todayTotal").innerText  = "+"+day0_tpcd;
+</script>
+{% endblock %}

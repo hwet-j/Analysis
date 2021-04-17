@@ -1,0 +1,125 @@
+{% load static %}
+<head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.min.js"></script> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<style>
+  table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.text-center{
+	text-align: center;
+	padding-bottom: 30px;
+	padding-top: 60px;
+}
+
+th, td {
+  padding: 6px;
+}
+.table_head{
+	margin-top: 16px;
+	font-size : 10pt;
+	color : black;
+}
+.table_text{
+	margin-top: 6px;
+	font-weight: bold;
+	font-size:11pt;
+}
+.table_text_nat{
+	margin-top: 6px;
+	font-size:11pt;
+	background-color: #ADD8E6;
+}
+.inc_text{
+margin-top: 3px;
+	font-size: 9pt;
+	color : red;
+	
+}
+.inc_text_vaccin{
+margin-top: 3px;
+	font-size: 9pt;
+	color : ForestGreen;
+	
+}
+
+.contaoiner {
+  margin-top: 30px;
+  overflow: hidden;
+  width: 77%;
+  margin-left: auto;
+  margin-right:auto;
+}
+.contaoiner_half {
+
+  width: 50%;
+
+}
+#banana {
+	text-align: center;
+	margin-top: 30px;
+	padding-top : 20px;
+	padding-bottom : 10px;
+	font-size : 10pt;
+	color : #F08080;
+	background-color: #fff3cd;
+}
+
+
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #6495ED;
+  color: black;
+  font-size: 30px;
+}
+
+.footer {
+  padding: 60px;
+  text-align: center;
+  background: #6495ED;
+  color: black;
+  font-size: 30px;
+}
+#icon {
+	width : 30%;
+}
+
+.center_text{
+	margin-top : 15px;
+	text-align: center;
+}
+.inc_text {
+	color:brick;
+}
+
+</style>
+
+</head>
+<div class="header">
+ 
+
+<img src="{% static "images/covid-19.png" %}" id="icon">
+ <p>FAST COVID-19 LIVE</p>
+</div>
+<ul class="nav nav-tabs nav-justified">
+    <li class="nav-item">
+      <a class="nav-link" href="list">COVID-19</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="list_vaccin">VACCIN</a>
+    </li>
+ </ul>
+{% block content %}
+{% endblock%}
+
+<br><br>
+<div class="footer">
+<span>FAST COVID-19 LIVE</span>
+</div>

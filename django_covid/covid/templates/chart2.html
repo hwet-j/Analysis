@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="contaoiner">
+		<div class="row">
+			<div class="col-md=8">
+				<canvas id="myChartBarDeath"></canvas>
+			</div>
+		</div>
+	</div>
+	<script>
+	const data_2 = {
+			  labels: labels_day,
+			  datasets: [			    
+			    {
+			      label: '누적 사망자',
+			      data: [
+			    	  {{ dataWeek.deathCnt }}, {{ data_6.deathCnt }}, {{ data_5.deathCnt }}, {{ data_4.deathCnt }}, {{ data_3.deathCnt }}, {{ data_2.deathCnt }}, {{ dataYesterday.deathCnt }}, {{ koreaData.deathCnt }} ],
+			    backgroundColor: 'transparent',
+				borderColor: 'FireBrick'
+			    }
+			  ]
+			};
+	
+	let myChartTwo = document.getElementById('myChartBarDeath').getContext('2d');
+	
+	let lineChartDeath = new Chart(myChartTwo,{	
+		type : 'line',	
+		data: data_2,
+		options: {
+		    responsive: true,
+		    plugins: {
+		      legend: {
+		        position: 'top',
+		      },
+		      title: {
+		        display: true,
+		        text: '코로자 사망자 추이'
+		      }
+		    }
+		  }
+	});
+	
+	</script>
+</body>
+</html>

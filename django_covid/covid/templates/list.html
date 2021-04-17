@@ -1,0 +1,426 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+<p class="center_text">마지막 업데이트 : {{koreaData.createDt}}</p>
+<div class="contaoiner">
+	<table>
+  <tr class="table_head">
+    <td>확진자</td>
+    <td>격리해제</td>
+    <td>사망자</td>
+    <td>격리중</td>
+  </tr>
+  <tr class="table_text">
+    <td >{{ koreaData.defCnt }}</td>
+    <td >{{ koreaData.isolClearCnt }}</td>
+    <td >{{ koreaData.deathCnt }}</td>
+    <td >{{ koreaData.isolIngCnt }}</td>
+  </tr>
+  <tr class="inc_text">
+    <td>+{{ koreaData.incDec }}</td>
+    <td id="isolClearInc">0</td>
+    <td id="deathInc">0</td>
+    <td id="isolIngInc">0</td>
+  </tr>
+</table>
+</div>
+<div class="contaoiner" id="banana">
+<p>신규 확진자 : 해외유입 +{{koreaData.overFlowCnt}} / 지역발생 +{{koreaData.localOccCnt}}</p>
+</div>
+	<div class="contaoiner">
+		<div class="row">
+			<div class="col-md=8">
+				<canvas id="myChartStacked"></canvas>
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<div class="contaoiner">
+		<div class="row">
+			<div class="col-md=8">
+				<canvas id="myChartBar"></canvas>
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<div class="contaoiner">
+		<div class="row">
+			<div class="col-md=8">
+				<canvas id="myChartBarDeath"></canvas>
+			</div>
+		</div>
+	</div>
+	<div class="contaoiner">
+		<div class="">
+			<div class="row">
+				<div class="col-md-6">
+					<canvas id="myChartPie"></canvas>
+					
+				</div>
+				<div class="col-md-6">
+				<canvas id="myChartPieDeath"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="contaoiner">
+		<div class="row">
+			<div class="col-md=8">
+				<canvas id="myChartBarAge"></canvas>
+			</div>
+		</div>
+	</div>
+	<div class="contaoiner">
+		<div class="row">
+			<div class="col-md=8">
+				<canvas id="myChartBarAgeDeath"></canvas>
+			</div>
+		</div>
+	</div>
+	
+	
+<script type="text/javascript">   
+
+
+
+
+
+
+</script>
+<div id="header"></div> 
+<script>
+
+	var deathInc = {{ koreaData.deathCnt }};
+	var isolIngInc = {{ koreaData.isolClearCnt }};
+	var isolClearInc = {{ koreaData.isolIngCnt }};
+	var deathInc2 = {{ data_2.deathCnt }};
+	var isolIngInc2 = {{ data_2.isolClearCnt }};
+	var isolClearInc2 = {{ data_2.isolIngCnt }};
+	deathInc = deathInc - deathInc2 ;
+	isolIngInc = isolIngInc - isolIngInc2;
+	isolClearInc = isolClearInc - isolClearInc;
+	document.getElementById("deathInc").innerText  = "+"+deathInc;
+	document.getElementById("isolIngInc").innerText  = "+"+isolIngInc;
+	document.getElementById("isolClearInc").innerText  = "+"+isolClearInc;
+	var day_7 = {{dataWeek.defCnt}};
+	var day_6 = {{data_6.defCnt}};
+	var day_5 = {{data_5.defCnt}};
+	var day_4 = {{data_4.defCnt}};
+	var day_3 = {{data_3.defCnt}};
+	var day_2 = {{data_2.defCnt}};
+	var day_1 = {{dataYesterday.defCnt}};
+	var day_0 = {{koreaData.defCnt}};
+	
+	const labels_day = ['{{dataWeek.stdDay}}',' {{data_6.stdDay}} ','{{data_5.stdDay}} ','{{data_4.stdDay}}',' {{data_3.stdDay}}',' {{data_2.stdDay}}',' {{dataYesterday.stdDay}} ','{{koreaData.stdDay}}'];	
+	const data_1 = {
+			labels : labels_day,
+			datasets:[
+				{
+					 label: '누적 확진',
+				      data:[ day_7, day_6, day_5, day_4, day_3, day_2, day_1, day_0 ],
+				      backgroundColor: 'rgb(255, 127, 80, 0.3)',
+				      borderColor: 'Coral'
+					
+				},{
+					
+						label : '누적 완치',
+						data:[
+							{{ dataWeek.isolClearCnt }},{{ data_6.isolClearCnt }}, {{ data_5.isolClearCnt }}, {{ data_4.isolClearCnt }}, {{ data_3.isolClearCnt }}, {{ data_2.isolClearCnt }}, {{ dataYesterday.isolClearCnt }}, {{ koreaData.isolClearCnt }}
+						],
+				    	  borderColor: 'skyblue'
+						
+				}
+			]			
+	}
+	const data_2 = {
+			  labels: labels_day,
+			  datasets: [			    
+			    {
+			      label: '누적 사망자',
+			      data: [
+			    	  {{ dataWeek.deathCnt }}, {{ data_6.deathCnt }}, {{ data_5.deathCnt }}, {{ data_4.deathCnt }}, {{ data_3.deathCnt }}, {{ data_2.deathCnt }}, {{ dataYesterday.deathCnt }}, {{ koreaData.deathCnt }} ],
+			    backgroundColor: 'transparent',
+				borderColor: 'FireBrick'
+			    }
+			  ]
+			};
+	const data_3 = {
+			labels : labels_day,
+			datasets:[
+				{
+				label : '신규확진자',
+				data:[					
+					{{ dataWeek.incDec }}, {{ data_6.incDec }}, {{ data_5.incDec }}, {{ data_4.incDec }}, {{ data_3.incDec }}, {{ data_2.incDec }}, {{ dataYesterday.incDec }}, {{ koreaData.incDec }}					
+					],
+					backgroundColor: 'rgb(255, 127, 80, 0.6)'
+			},
+			{
+			label : '해외 유입',
+			data:[					
+				{{ dataWeek.overFlowCnt }}, {{ data_6.overFlowCnt }}, {{ data_5.overFlowCnt }}, {{ data_4.overFlowCnt }}, {{ data_3.overFlowCnt }}, {{ data_2.overFlowCnt }}, {{ dataYesterday.overFlowCnt }}, {{ koreaData.overFlowCnt }}
+				],
+				backgroundColor: 'rgb(220, 20, 60, 0.6)'
+
+			},
+			],		
+		};
+
+
+	
+	let myChartThree = document.getElementById('myChartStacked').getContext('2d');
+	let myChartTwo = document.getElementById('myChartBarDeath').getContext('2d');
+	let myChartOne = document.getElementById('myChartBar').getContext('2d');
+
+	
+	let lineChart = new Chart(myChartOne,{	
+		type : 'line',	
+		data: data_1,
+		options: {
+		    responsive: true,
+		    plugins: {
+		      legend: {
+		        position: 'top',
+		      },
+		      title: {
+		        display: true,
+		        text: '코로나 감염자 추세'
+		      }
+		    }
+		    
+		
+
+		  },
+		
+	});
+	let lineChartDeath = new Chart(myChartTwo,{	
+		type : 'line',	
+		data: data_2,
+		options: {
+		    responsive: true,
+		    plugins: {
+		      legend: {
+		        position: 'top',
+		      },
+		      title: {
+		        display: true,
+		        text: '코로자 사망자 추이'
+		      }
+		    }
+		  }
+	});
+	let lineChartDef = new Chart(myChartThree,{	
+		type : 'bar',	
+		data: data_3,
+		options: {
+			
+		    plugins: {
+		      title: {
+		        display: true,
+		        text: '신규 확진자 추세',
+		      },
+		    },
+		    responsive: true,
+		    scales: {
+		      x: {
+		        stacked: true,
+		      },
+		      y: {
+		        stacked: true,
+		      }
+		    }
+		}
+	});
+
+
+	
+</script>
+
+<script>
+ 	var week_data = [{{dataWeek.defCnt}}, {{data_6.defCnt}}, {{data_5.defCnt}}, {{data_4.defCnt}}, {{data_3.defCnt}}, {{data_2.defCnt}}, {{dataYesterday.defCnt}}, {{koreaData.defCnt}}];
+
+</script>
+<hr><br>
+<div class="contaoiner">
+<h1><p class="text-center">대한민국 현황</p></h1>
+	<table>
+	  <tr class="table_text_nat">
+	    <td>지역</td>
+	    <td>확진자</td>
+	    
+	    <td>해외 유입</td>
+	    <td>발생률 (100k)</td>
+	    <td>격리중</td>
+	    <td>격리 해제</td>
+	    <td>누적 사망자</td>
+	    <td>누적 확진자</td>
+	  </tr>
+	
+	{% for d in data %}
+		<tr class="table_text">
+				<td>{{d.gubun}}</td>
+				<td>{{d.incDec}}</td>			
+				<td>{{d.overFlowCnt}}</td>
+				<td>{{d.qurRate}}</td>
+				<td>{{d.isolIngCnt}}</td>
+				<td>{{d.isolClearCnt}}</td>
+				<td>{{d.deathCnt}}</td>
+				<td>{{d.defCnt}} </td>
+		</tr>
+	{% endfor %}
+	</table>
+</div>
+<hr>
+
+
+<div id="container"></div>
+<div class="contaoiner">
+<h1>Hello, Chinese Virus</h1>
+<h3>* 괄호안의 숫자는 전일 대비 증가량 (UTC+9)</h3>
+<h3>* 치명률(%) = 총 사망자/총 확진자</h3>
+<h3>* 완치율(%) = 총 완치자/총 확진자</h3>
+<h3>* 치료중 = 총 확진자 - 총 사망자 - 총 완치자</h3>
+<h4>* 더이상 공개하지 않는 수치는 N/A로 표시</h4>
+</div>
+<hr>
+<script>
+const label_age =['{{data_male.gubun}}','{{data_female.gubun}}'];
+const label_gender = ['{{data_80.gubun}}', '{{data_70.gubun}}', '{{data_60.gubun}}', '{{data_50.gubun}}',
+	'{{data_40.gubun}}', '{{data_30.gubun}}', '{{data_20.gubun}}', '{{data_10.gubun}}', '{{data_00.gubun}}'];
+
+const data_gender= {
+			  labels: label_age,
+			  datasets: [
+			    {
+			      label: '감염자',
+			      data: [{{data_male.confCase}}, {{data_female.confCase}}],
+			      backgroundColor:[
+			    	 'rgb(30, 144, 255, 0.4)',' rgb(255, 20, 147,0.4)'
+			      ]
+			    }
+			  ]
+			};
+const data_gender_death= {
+		  labels: label_age,
+		  datasets: [
+		    {
+		      label: '사망자',
+		      data: [{{data_male.death}}, {{data_female.death}}],
+		      backgroundColor:[
+		    	  'rgb(25, 25, 112, 0.4)',' rgb(255, 99, 71,0.4)'
+		      ]
+		    }
+		  ]
+		};
+const data_age_death= {
+		  labels: label_gender,
+		  datasets: [
+		    {
+		      label: '감염자',
+		      data: [{{data_80.confCase}}, {{data_70.confCase}}, {{data_60.confCase}}, {{data_50.confCase}},
+		    		{{data_40.confCase}}, {{data_30.confCase}}, {{data_20.confCase}}, {{data_10.confCase}}, {{data_00.confCase}}],
+		      backgroundColor:[
+		    	  
+		    	  'rgb(25, 255, 0, 0.4)','rgb(50, 205, 0, 0.4)','rgb(75, 155, 0, 0.4)','rgb(100, 100, 0, 0.4)','rgb(125, 55, 55, 0.4)','rgb(150, 55, 105, 0.4)','rgb(175, 55, 155, 0.4)','rgb(200, 55, 205, 0.4)','rgb(225, 55, 255, 0.4)'
+		      ]
+		    }
+		  ]
+		};
+const data_age= {
+		  labels: label_gender,
+		  datasets: [
+		    {
+		      label: '사망자',
+		      data: [{{data_80.death}}, {{data_70.death}}, {{data_60.death}}, {{data_50.death}},
+		    		{{data_40.death}}, {{data_30.death}}, {{data_20.death}}, {{data_10.death}}, {{data_00.death}}],
+		      backgroundColor:[
+		    	  'rgb(0, 255, 0, 0.4)','rgb(0, 205, 0, 0.4)','rgb(0, 155, 0, 0.4)','rgb(0, 100, 0, 0.4)','rgb(0, 55, 55, 0.4)','rgb(0, 55, 105, 0.4)','rgb(0, 55, 155, 0.4)','rgb(0, 55, 205, 0.4)','rgb(0, 55, 255, 0.4)',
+		      ]
+		    }
+		  ]
+		};
+			let pieGenderConf = document.getElementById('myChartPie').getContext('2d');
+			let pieGenderDeath = document.getElementById('myChartPieDeath').getContext('2d');
+			let barAgeConf = document.getElementById('myChartBarAge').getContext('2d');
+			let barAgeDeath = document.getElementById('myChartBarAgeDeath').getContext('2d');
+			
+			let pieChartOne = new Chart(pieGenderConf,{
+			  type: 'pie',
+			  data: data_gender,
+			  options: {
+			    responsive: true,
+			    plugins: {
+			      legend: {
+			        position: 'top',
+			      },
+			      title: {
+			        display: true,
+			        text: '남녀 감염자'
+			      }
+			    }
+			  },
+			});
+			
+			let pieChartTwo = new Chart(pieGenderDeath,{
+				  type: 'pie',
+				  data: data_gender_death,
+				  options: {
+				    responsive: true,
+				    plugins: {
+				      legend: {
+				        position: 'top',
+				      },
+				      title: {
+				        display: true,
+				        text: '남녀 사망자'
+				      }
+				    }
+				  },
+				});
+			let barAgeConfOne = new Chart(barAgeConf,{	
+				type : 'bar',	
+				data: data_age_death,
+				options: {
+					indexAxis: 'y',
+				    plugins: {
+				      title: {
+				        display: true,
+				        text: '세대별 확진자',
+				      },
+				    },
+				    responsive: true,
+				    scales: {
+				      x: {
+				        stacked: true,
+				      },
+				      y: {
+				        stacked: true,
+				      }
+				    }
+				}
+			});
+			let barAgeDeathOne = new Chart(barAgeDeath,{	
+				type : 'bar',	
+				data: data_age,
+				options: {
+					indexAxis: 'y',
+				    plugins: {
+				      title: {
+				        display: true,
+				        text: '세대별 감염자',
+				      },
+				    },
+				    responsive: true,
+				    scales: {
+				      x: {
+				        stacked: true,
+				      },
+				      y: {
+				        stacked: true,
+				      }
+				    }
+				}
+			});
+
+</script>
+{% endblock %}
